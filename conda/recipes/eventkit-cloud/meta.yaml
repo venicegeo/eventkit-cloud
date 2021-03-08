@@ -24,17 +24,17 @@ requirements:
     - ruby
   run_constrained:
     - memcached=1.6.6
-    - qgis=3.14.16
+    - qgis=3.16.3
   run:
     {% for req in run_requirements -%}
       - {{ req }}
     {% endfor %}
     - python >=3.7,<3.8
-    - libiconv=1.15
+    - libiconv=1.16
     - mesa-libgl-cos7-x86_64
     - osmctools=0.9.0
     - proj=7.1.1
-    - zstd=1.4.5
+    - zstd=1.4.8
 about:
   home: https://github.com/eventkit/eventkit-cloud
   license: BSD 3-Clause
