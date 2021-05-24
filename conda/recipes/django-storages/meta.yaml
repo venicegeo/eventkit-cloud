@@ -1,5 +1,5 @@
 {% set name = "django-storages" %}
-{% set version = "1.9.1" %}
+{% set version = "1.11.1" %}
 {% set sha256 = "a59e9923cbce7068792f75344ed7727021ee4ac20f227cf17297d0d03d141e91" %}
 
 package:

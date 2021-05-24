@@ -187,7 +187,11 @@ def search(request):
             result["features"] = features + result["features"]
             return HttpResponse(content=json.dumps(result), status=200, content_type="application/json")
         # if no results just return the MGRS feature in the response
-        return HttpResponse(content=json.dumps({"features": features}), status=200, content_type="application/json",)
+        return HttpResponse(
+            content=json.dumps({"features": features}),
+            status=200,
+            content_type="application/json",
+        )
 
     elif is_lat_lon(q):
         coords = is_lat_lon(q)
@@ -320,7 +324,11 @@ def help_formats(request):
 @require_http_methods(["GET"])
 def help_presets(request):
     configurations_url = reverse("configurations")
-    return render(request, "help/help_presets.html", {"configurations_url": configurations_url},)
+    return render(
+        request,
+        "help/help_presets.html",
+        {"configurations_url": configurations_url},
+    )
 
 
 @require_http_methods(["GET"])

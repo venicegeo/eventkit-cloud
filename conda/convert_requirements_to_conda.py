@@ -20,11 +20,16 @@ def convert_requirements_to_conda():
             if conda_match:
                 conda_alias = conda_match.group(1).strip()
             try:
-                package_name, package_version = requirement.lower().split("==")
+                requirement_text = requirement.lower().split("==")
+                package_name = requirement_text.pop(0)
+                if requirement_text:
+                    package_version = requirement_text.pop(0)
+                    requirement = f"{conda_alias or package_name}=={package_version}"
+                else:
+                    requirement = f"{conda_alias or package_name}"
+                conda_requirements.append(requirement)
             except ValueError as ve:
-                print(f"Requirement {requirement} is invalid, or is missing a pinned version.")
-                raise ve
-            conda_requirements.append(f"{conda_alias or package_name}=={package_version}")
+                conda_requirements.append(requirement.lower())
     with open(path.join(base_path, "recipes", "eventkit-cloud", "conda-requirements.txt"), mode="wt", encoding="utf-8") as file:
         file.write("\n".join(conda_requirements))
 

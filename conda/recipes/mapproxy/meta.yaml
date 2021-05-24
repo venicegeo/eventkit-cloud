@@ -1,5 +1,5 @@
 {% set name = "mapproxy" %}
-{% set version = "1.12.0" %}
+{% set version = "1.13.0" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,24 +7,22 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 90b49345fbfc76171fefe2845e3ed16d8ae3417df047b590d58717ac97257f5e
+  sha256: 2433f9a05b863cecebe54460c92032cb8d176e0b773b7e08f623db41eb2710a6
 
 build:
   number: 0
   entry_points:
     - mapproxy-seed = mapproxy.seed.script:main
     - mapproxy-util = mapproxy.script.util:main
-  noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - pillow
-    - pip
-    - python=3.7
+    - pip=21.1
+    - python=3.9
   run:
     - pillow
-    - python=3.7
+    - python=3.9
     - pyyaml
     - proj=7.1.1
     - gdal=3.1.4

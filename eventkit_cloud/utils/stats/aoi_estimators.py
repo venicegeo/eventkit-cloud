@@ -72,7 +72,13 @@ class AoiEstimator(object):
                 return False
 
     def __init__(
-        self, bbox, bbox_srs="4326", with_clipping=True, cap_estimates=True, min_zoom=None, max_zoom=None,
+        self,
+        bbox,
+        bbox_srs="4326",
+        with_clipping=True,
+        cap_estimates=True,
+        min_zoom=None,
+        max_zoom=None,
     ):
         # It would be good to integrate a BBOX class to pass around instead of doing this
         # It can get cumbersome and lead to errors when the bbox srs is assumed

@@ -48,7 +48,13 @@ def get_wmts_snapshot_image(base_url: str, zoom_level: int = None, bbox: list = 
         bbox = copy.copy(WGS84_FULL_WORLD)
     # Creates and returns a TileGrid object, allows us specify min_res instead of supplying the resolution list.
     min_res = 0.703125  # EPSG:4326 with two tiles at level 0
-    mapproxy_grid = tile_grid(srs=4326, min_res=min_res, bbox_srs=4326, bbox=copy.copy(WGS84_FULL_WORLD), origin="ul",)
+    mapproxy_grid = tile_grid(
+        srs=4326,
+        min_res=min_res,
+        bbox_srs=4326,
+        bbox=copy.copy(WGS84_FULL_WORLD),
+        origin="ul",
+    )
 
     if zoom_level is None:
         resolution = get_resolution_for_extent(bbox)
@@ -141,7 +147,11 @@ def make_thumbnail_downloadable(filepath, provider_uid, download_filename=None):
     filesize = os.stat(filepath).st_size
     thumbnail_snapshot = MapImageSnapshot.objects.create(download_url="", filename=filepath, size=filesize)
     if getattr(settings, "USE_S3", False):
-        download_url = s3.upload_to_s3(thumbnail_snapshot.uid, filepath, download_filename,)
+        download_url = s3.upload_to_s3(
+            thumbnail_snapshot.uid,
+            filepath,
+            download_filename,
+        )
         os.remove(filepath)
     else:
         download_path = os.path.join(get_provider_image_download_dir(provider_uid), download_filename)

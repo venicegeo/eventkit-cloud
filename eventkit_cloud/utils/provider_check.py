@@ -477,7 +477,7 @@ class WCSProviderCheck(OWSProviderCheck):
             if envelope is None:
                 continue
 
-            pos = envelope.getchildren()
+            pos = list(envelope)
             # Make sure there aren't any surprises
             coord_pattern = re.compile(r"^-?\d+(\.\d+)? -?\d+(\.\d+)?$")
             if not pos or not all("pos" in p.tag and re.match(coord_pattern, p.text) for p in pos):

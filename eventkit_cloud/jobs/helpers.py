@@ -43,7 +43,12 @@ def get_provider_image_download_path(provider_uid):
 
     :param provider_uid: uid from the DataProvider model.
     """
-    return os.path.join(settings.EXPORT_MEDIA_ROOT.rstrip("\/"), "images", "providers", str(provider_uid),)
+    return os.path.join(
+        settings.EXPORT_MEDIA_ROOT.rstrip("\/"),
+        "images",
+        "providers",
+        str(provider_uid),
+    )
 
 
 def get_valid_regional_justification(regional_policy, user: User):

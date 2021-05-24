@@ -28,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestCoreModels(TestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.user1 = User.objects.create_user(username="demo1", email="demo@demo.com", password="demo1")
         self.user2 = User.objects.create_user(username="demo2", email="demo@demo.com", password="demo2")
 
@@ -169,12 +171,14 @@ class TestCoreModels(TestCase):
 
         # 4 relationships between this user and a group
         self.assertEqual(
-            groups.filter(group_permissions__user=self.user1).count(), 4,
+            groups.filter(group_permissions__user=self.user1).count(),
+            4,
         )
 
         # 3 relationships between this user and a group
         self.assertEqual(
-            groups.filter(group_permissions__user=self.user2).count(), 3,
+            groups.filter(group_permissions__user=self.user2).count(),
+            3,
         )
 
         counts = get_group_counts(groups_queryset=groups, user=self.user1)

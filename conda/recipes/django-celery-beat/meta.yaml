@@ -1,13 +1,13 @@
 {% set name = "django-celery-beat" %}
-{% set version = "2.0.0" %}
+{% set version = "2.2.0" %}
 
 package:
   name: "{{ name|lower }}"
   version: "{{ version }}"
 
 source:
-  url: https://files.pythonhosted.org/packages/6b/c5/96827d3fc2d73ff542515abd1b39cab06c156e09092466532c7bf68a07f8/{{name}}-{{version}}.tar.gz
-  sha256: fdf1255eecfbeb770c6521fe3e69989dfc6373cd5a7f0fe62038d37f80f47e48
+  url: https://files.pythonhosted.org/packages/52/8b/73cc1ea8a6bcb51728210a65a2f0a908d7b605d4f34cd68c5b4c935ebc81/{{name}}-{{version}}.tar.gz
+  sha256: b8a13afb15e7c53fc04f4f847ac71a6d32088959aba701eb7c4a59f0c28ba543
 
 build:
   number: 0
@@ -15,11 +15,8 @@ build:
 
 requirements:
   host:
-    - celery
-    - django-timezone-field
     - pip
     - python
-    - python-crontab
   run:
     - celery
     - django-timezone-field

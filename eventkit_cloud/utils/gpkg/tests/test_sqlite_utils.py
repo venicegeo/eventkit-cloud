@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestSqliteUtils(TransactionTestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.path = os.path.dirname(os.path.realpath(__file__))
 
     @patch("eventkit_cloud.utils.gpkg.sqlite_utils.connect")
@@ -31,7 +33,9 @@ class TestSqliteUtils(TransactionTestCase):
 
 
 class TestTableQuery(TransactionTestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.path = os.path.dirname(os.path.realpath(__file__))
 
     def test_get_table_query_validate(self):
@@ -60,7 +64,9 @@ class TestTableQuery(TransactionTestCase):
 
 
 class TestTable(TransactionTestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.path = os.path.dirname(os.path.realpath(__file__))
 
     def test_get_table_exists(self):

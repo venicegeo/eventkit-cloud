@@ -35,7 +35,9 @@ class OgcApiProcess:
 
         try:
             response = self.session.post(
-                jobs_endpoint, json=payload, verify=getattr(settings, "SSL_VERIFICATION", True),
+                jobs_endpoint,
+                json=payload,
+                verify=getattr(settings, "SSL_VERIFICATION", True),
             )
             response.raise_for_status()
 
@@ -51,7 +53,9 @@ class OgcApiProcess:
 
         return response_content
 
-    def get_job_results(self,):
+    def get_job_results(
+        self,
+    ):
         """
         Fetches the job results
         Returns the results' download URL.
@@ -67,7 +71,8 @@ class OgcApiProcess:
         # fetch job results
         try:
             response = self.session.get(
-                urljoin(self.job_url, "results/"), verify=getattr(settings, "SSL_VERIFICATION", True),
+                urljoin(self.job_url, "results/"),
+                verify=getattr(settings, "SSL_VERIFICATION", True),
             )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
@@ -92,7 +97,10 @@ class OgcApiProcess:
         while job_status not in OGC_Status.get_finished_status():
             time.sleep(interval)
             try:
-                response = self.session.get(job_url, verify=getattr(settings, "SSL_VERIFICATION", True),)
+                response = self.session.get(
+                    job_url,
+                    verify=getattr(settings, "SSL_VERIFICATION", True),
+                )
                 response.raise_for_status()
             except requests.exceptions.RequestException as e:
                 raise Exception(f"Unsuccessful request:{e}")

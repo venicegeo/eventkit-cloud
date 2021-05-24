@@ -19,7 +19,9 @@ logger = logging.getLogger(__name__)
 class TestTaskBuilder(TestCase):
     fixtures = ("osm_provider", "test_providers")
 
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.path = os.path.dirname(os.path.realpath(__file__))
         group, created = Group.objects.get_or_create(name="TestDefaultExportExtentGroup")
         with patch("eventkit_cloud.jobs.signals.Group") as mock_group:

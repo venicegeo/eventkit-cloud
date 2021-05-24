@@ -16,8 +16,8 @@ django.setup()
 
 
 def chain_success(chain_async_result):
-    """ Checks that each task for the chain producing @chain_result completed successfully.
-        Returns True if all tasks are successful, False otherwise.
+    """Checks that each task for the chain producing @chain_result completed successfully.
+    Returns True if all tasks are successful, False otherwise.
     """
     print("Waiting on chain.ready()")
     # Make sure the chain has completed
@@ -46,8 +46,8 @@ def chain_success(chain_async_result):
 
 
 def test_shutdown_celery_workers_mgmt_cmd():
-    """ Checks that 'shutdown_celery_workers' allows previous tasks to finish, but prevents additional processing
-        then stops the celery workers.
+    """Checks that 'shutdown_celery_workers' allows previous tasks to finish, but prevents additional processing
+    then stops the celery workers.
     """
     # Ensure celery container is running
     if app.control.inspect().ping() is None:

@@ -123,7 +123,9 @@ def add_layers_to_group(
                 try:
                     logger.error(f"Converting {file_path} to ArcGIS Layer")
                     arcpy.conversion.KMLToLayer(
-                        in_kml_file=file_path, output_folder=output_folder, output_data=vector_layer_name,
+                        in_kml_file=file_path,
+                        output_folder=output_folder,
+                        output_data=vector_layer_name,
                     )
                     logger.error(f"Successfully converted: {file_path}")
                 except Exception as e:

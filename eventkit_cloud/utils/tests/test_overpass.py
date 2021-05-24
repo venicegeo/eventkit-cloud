@@ -18,7 +18,9 @@ logger = logging.getLogger(__name__)
 class TestOverpass(TestCase):
     fixtures = ("datamodel_presets.json",)
 
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.url = settings.OVERPASS_API_URL
         self.bbox = [-10.85, 6.25, -10.62, 6.4]  # [<long0>, <lat0>, <long1>, <lat1>]
         self.path = os.path.dirname(os.path.realpath(__file__))
@@ -52,12 +54,16 @@ class TestOverpass(TestCase):
             "node(6.25,-10.85,6.4,-10.62);<;(._;>;);out body;"
         )
 
-    def test_get_query(self,):
+    def test_get_query(
+        self,
+    ):
         overpass = Overpass(stage_dir=self.path + "/files/", bbox=self.bbox, job_name="testjob")
         q = overpass.get_query()
         self.assertEqual(q, self.query)
 
-    def test_custom_query(self,):
+    def test_custom_query(
+        self,
+    ):
         example_max_size = 10000
         example_timeout = 10000
         example_template = "$maxsize-$timeout-$bbox"

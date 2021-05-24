@@ -11,13 +11,17 @@ logger = logging.getLogger(__name__)
 
 def get_s3_client():
     return boto3.client(
-        "s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
     )
 
 
 def get_s3_resource():
     return boto3.resource(
-        "s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
     )
 
 
@@ -45,7 +49,8 @@ def upload_to_s3(source_path, destination_filename, client=None, user_details=No
         client.upload_fileobj(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=destination_filename, Fileobj=asset_file)
 
     return client.generate_presigned_url(
-        "get_object", Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": destination_filename},
+        "get_object",
+        Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": destination_filename},
     ).split("?")[0]
 
 

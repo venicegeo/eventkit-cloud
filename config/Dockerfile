@@ -24,7 +24,8 @@ RUN curl -L https://repo.continuum.io/miniconda/Miniconda3-py37_4.9.2-Linux-x86_
     rm miniconda.sh && \
     \
     # Setup channels, only use channels in environment file or built locally.
-    conda config --add channels file:///var/lib/eventkit/conda/repo && \
+    conda config --remove channels defaults && \
+    conda config --add channels file://var/lib/eventkit/conda/repo && \
     conda config --set channel_priority strict && \
     \
     # Setup certs (might be needed if self-hosting).
@@ -32,17 +33,17 @@ RUN curl -L https://repo.continuum.io/miniconda/Miniconda3-py37_4.9.2-Linux-x86_
     conda config --set ssl_verify /var/lib/eventkit/conda/cacert.crt && \
     \
     # Create the environment
-    conda env create --file environment-dev.yml python=3.7 && \
-    SECRET_KEY=temp_secret_key /home/eventkit/miniconda3/envs/eventkit-cloud/bin/python \
-    /home/eventkit/miniconda3/envs/eventkit-cloud/bin/manage.py collectstatic && \
+    conda env create --force --offline --file environment-dev.yml python=3.9 && \
+#    SECRET_KEY=temp_secret_key /home/eventkit/miniconda3/envs/eventkit-cloud/bin/python \
+#    /home/eventkit/miniconda3/envs/eventkit-cloud/bin/manage.py collectstatic && \
     \
     # Clean up.
     conda clean --yes --all && \
     rm -rf /var/lib/eventkit/conda && \
-    rm -rf /home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.7/site-packages/eventkit_cloud
+    rm -rf /home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.9/site-packages/eventkit_cloud
 
-COPY --chown=eventkit ./eventkit_cloud /home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.7/site-packages/eventkit_cloud
+COPY --chown=eventkit ./eventkit_cloud /home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.9/site-packages/eventkit_cloud
 
-ENTRYPOINT ["bash", "/home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.7/site-packages/scripts/wait-for-postgis.sh"]
+ENTRYPOINT ["bash", "/home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.9/site-packages/scripts/wait-for-postgis.sh"]
 
 CMD ["echo", "This image has no default run command."]

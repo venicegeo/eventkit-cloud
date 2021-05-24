@@ -6,7 +6,8 @@ package:
   version: "{{ version }}"
 
 source:
-  url: https://github.com/django-notifications/django-notifications/archive/{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/12/b9/dd3525a3af44dea70a67f614056750daf4f506a32b1c8af41a2dd335b244/{{ name }}-{{ version }}.tar.gz
+  sha256: debeb71b7076b08487b40bf07664d1cc43b9977c4480bbc969b30236dda7a461
 
 build:
   number: 0

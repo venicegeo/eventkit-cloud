@@ -138,7 +138,10 @@ def is_mgrs(query):
     :return: True if the string matches MGSR, False if not
     """
     query = re.sub(r"\s+", "", query)
-    pattern = re.compile(r"^(\d{1,2})([C-HJ-NP-X])\s*([A-HJ-NP-Z])([A-HJ-NP-V])\s*(\d{1,5}\s*\d{1,5})$", re.I,)
+    pattern = re.compile(
+        r"^(\d{1,2})([C-HJ-NP-X])\s*([A-HJ-NP-Z])([A-HJ-NP-V])\s*(\d{1,5}\s*\d{1,5})$",
+        re.I,
+    )
     if pattern.match(query):
         return True
     return False

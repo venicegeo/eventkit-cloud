@@ -55,7 +55,9 @@ class TaskFactory:
     A class to assemble task chains (using TaskChainBuilders) based on an Export Run.
     """
 
-    def __init__(self,):
+    def __init__(
+        self,
+    ):
         self.type_task_map = {
             "osm": osm_data_collection_task,
             "wfs": wfs_export_task,
@@ -145,7 +147,11 @@ class TaskFactory:
             finalized_provider_task_chain_list = []
             # Create a task record which can hold tasks for the run (datapack)
             run_task_record = DataProviderTaskRecord.objects.create(
-                run=run, name="run", slug="run", status=TaskState.PENDING.value, display=False,
+                run=run,
+                name="run",
+                slug="run",
+                status=TaskState.PENDING.value,
+                display=False,
             )
             stage_dir = get_provider_staging_dir(run_dir, run_task_record.slug)
             if not os.path.exists(stage_dir):
@@ -183,7 +189,10 @@ class TaskFactory:
                         "session_token": session_token,
                     }
 
-                    (provider_task_record_uid, provider_subtask_chain,) = TaskChainBuilder().build_tasks(**args)
+                    (
+                        provider_task_record_uid,
+                        provider_subtask_chain,
+                    ) = TaskChainBuilder().build_tasks(**args)
 
                     wait_for_providers_signature = wait_for_providers_task.s(
                         run_uid=run_uid,
@@ -288,7 +297,13 @@ def create_run(job_uid, user=None, clone=False):
                     run_count -= 1
 
             sendnotification(
-                run, run.user, NotificationVerb.RUN_STARTED.value, None, None, NotificationLevel.INFO.value, "",
+                run,
+                run.user,
+                NotificationVerb.RUN_STARTED.value,
+                None,
+                None,
+                NotificationLevel.INFO.value,
+                "",
             )
             run_uid = run.uid
             logger.debug("Saved run with id: {0}".format(str(run_uid)))
@@ -438,8 +453,8 @@ class InvalidLicense(Error):
 def create_finalize_run_task_collection(
     run_uid=None, run_dir=None, run_zip_task_chain=None, run_zip_file_slug_sets=None, apply_args=None
 ):
-    """ Returns a 2-tuple celery chain of tasks that need to be executed after all of the export providers in a run
-        have finished, and a finalize_run_task signature for use as an errback.
+    """Returns a 2-tuple celery chain of tasks that need to be executed after all of the export providers in a run
+    have finished, and a finalize_run_task signature for use as an errback.
     """
     from eventkit_cloud.tasks.views import generate_zipfile_chain
 

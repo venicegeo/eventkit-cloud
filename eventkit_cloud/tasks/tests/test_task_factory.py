@@ -28,7 +28,9 @@ class TestExportTaskFactory(TestCase):
 
     fixtures = ("osm_provider.json",)
 
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.path = os.path.dirname(os.path.realpath(__file__))
         group, created = Group.objects.get_or_create(name="TestDefaultExportExtentGroup")
         with patch("eventkit_cloud.jobs.signals.Group") as mock_group:
@@ -126,10 +128,12 @@ class CreateFinalizeRunTaskCollectionTests(TestCase):
     @patch("eventkit_cloud.tasks.task_factory.finalize_run_task")
     @patch("eventkit_cloud.tasks.task_factory.chain")
     def test_create_finalize_run_task_collection(
-        self, chain, finalize_run_task, zip_file_task,
+        self,
+        chain,
+        finalize_run_task,
+        zip_file_task,
     ):
-        """ Checks that all of the expected tasks were prepared and combined in a chain for return.
-        """
+        """Checks that all of the expected tasks were prepared and combined in a chain for return."""
         chain.return_value = "When not mocked, this would be a celery chain"
         # None of these need correspond to real things, they're just to check the inner calls.
         run_uid = 1

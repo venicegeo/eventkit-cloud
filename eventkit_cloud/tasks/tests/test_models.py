@@ -60,7 +60,9 @@ class TestExportRun(TestCase):
         job = Job.objects.create(name="TestExportRun", description="Test description", user=user, the_geom=the_geom)
         job.data_provider_tasks.add(provider_task)
 
-    def test_export_run(self,):
+    def test_export_run(
+        self,
+    ):
         job = Job.objects.first()
         run = ExportRun.objects.create(job=job, status="SUBMITTED", user=job.user)
         saved_run = ExportRun.objects.get(uid=str(run.uid))
@@ -69,7 +71,9 @@ class TestExportRun(TestCase):
         self.assertIsNone(run.notified)
         self.assertIsNotNone(run.expiration)
 
-    def test_get_tasks_for_run(self,):
+    def test_get_tasks_for_run(
+        self,
+    ):
         job = Job.objects.first()
         run = ExportRun.objects.create(job=job, user=job.user)
         saved_run = ExportRun.objects.get(uid=str(run.uid))
@@ -82,7 +86,9 @@ class TestExportRun(TestCase):
         tasks = run.data_provider_task_records.all()[0].tasks.all()
         self.assertEqual(tasks[0], saved_task)
 
-    def test_get_runs_for_job(self,):
+    def test_get_runs_for_job(
+        self,
+    ):
         job = Job.objects.first()
         for x in range(5):
             run = ExportRun.objects.create(job=job, user=job.user)
@@ -94,7 +100,9 @@ class TestExportRun(TestCase):
         self.assertEqual(5, len(runs))
         self.assertEqual(1, len(tasks))
 
-    def test_delete_export_run(self,):
+    def test_delete_export_run(
+        self,
+    ):
         job = Job.objects.first()
         run = ExportRun.objects.create(job=job, user=job.user)
         task_uid = str(uuid.uuid4())  # from celery

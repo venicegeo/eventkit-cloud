@@ -156,7 +156,14 @@ def get_meta(ds_path, is_raster=True):
     """
 
     multiprocess_queue = multiprocessing.dummy.Queue()
-    proc = multiprocessing.dummy.Process(target=get_gdal_metadata, args=(ds_path, is_raster, multiprocess_queue,))
+    proc = multiprocessing.dummy.Process(
+        target=get_gdal_metadata,
+        args=(
+            ds_path,
+            is_raster,
+            multiprocess_queue,
+        ),
+    )
     proc.start()
     proc.join()
     return multiprocess_queue.get()
@@ -851,7 +858,10 @@ def rename_duplicate(original_file: str) -> str:
     protected_files = [".pbf"]
     if os.path.splitext(original_file)[1] in protected_files:
         raise Exception(f"The {original_file} cannot be renamed it is protected and/or not writable by this module.")
-    returned_file = os.path.join(os.path.dirname(original_file), "old_{0}".format(os.path.basename(original_file)),)
+    returned_file = os.path.join(
+        os.path.dirname(original_file),
+        "old_{0}".format(os.path.basename(original_file)),
+    )
     # if the original and renamed files both exist, we can remove the renamed version, and then rename the file.
     if os.path.isfile(returned_file) and os.path.isfile(original_file):
         os.remove(returned_file)

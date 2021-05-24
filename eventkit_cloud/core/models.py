@@ -159,7 +159,10 @@ class GroupPermission(TimeStampedModelMixin):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_permissions")
-    permission = models.CharField(choices=[("MEMBER", "Member"), ("ADMIN", "Admin")], max_length=10,)
+    permission = models.CharField(
+        choices=[("MEMBER", "Member"), ("ADMIN", "Admin")],
+        max_length=10,
+    )
 
     # A user should only have one type of permission per group.
     class Meta:

@@ -116,7 +116,9 @@ class TestLockingTask(TestCase):
 class ExportTaskBase(TestCase):
     fixtures = ("osm_provider.json", "datamodel_presets.json")
 
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.maxDiff = None
         self.path = os.path.dirname(os.path.realpath(__file__))
         self.group, created = Group.objects.get_or_create(name="TestDefault")
@@ -1072,7 +1074,9 @@ class TestExportTasks(ExportTaskBase):
                 run_uid=self.run.uid, task_uid=str(saved_export_task.uid), stage_dir=stage_dir, job_name=job_name
             )
 
-    def test_task_on_failure(self,):
+    def test_task_on_failure(
+        self,
+    ):
         celery_uid = str(uuid.uuid4())
         # assume task is running
         export_provider_task = DataProviderTaskRecord.objects.create(

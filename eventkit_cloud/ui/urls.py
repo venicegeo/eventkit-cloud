@@ -19,9 +19,15 @@ from eventkit_cloud.ui.views import (
 
 urlpatterns = [
     re_path(
-        r"^login", never_cache(ensure_csrf_cookie(TemplateView.as_view(template_name="ui/index.html"))), name="login",
+        r"^login",
+        never_cache(ensure_csrf_cookie(TemplateView.as_view(template_name="ui/index.html"))),
+        name="login",
     ),
-    re_path(r"^$", never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))), name="home",),
+    re_path(
+        r"^$",
+        never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))),
+        name="home",
+    ),
     re_path(
         r"^dashboard",
         never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))),
@@ -33,17 +39,29 @@ urlpatterns = [
         name="exports",
     ),
     re_path(
-        r"^status", never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))), name="status",
+        r"^status",
+        never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))),
+        name="status",
     ),
     re_path(
-        r"^create/?$", never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))), name="create",
+        r"^create/?$",
+        never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))),
+        name="create",
     ),
     re_path(
-        r"^account", never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))), name="account",
+        r"^account",
+        never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))),
+        name="account",
     ),
-    re_path(r"^about", never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))), name="about",),
     re_path(
-        r"^groups", never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))), name="groups",
+        r"^about",
+        never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))),
+        name="about",
+    ),
+    re_path(
+        r"^groups",
+        never_cache(login_required(TemplateView.as_view(template_name="ui/index.html"))),
+        name="groups",
     ),
     re_path(r"^logout", never_cache(login_required(logout)), name="logout"),
     re_path(r"^search/?$", never_cache(login_required(search))),

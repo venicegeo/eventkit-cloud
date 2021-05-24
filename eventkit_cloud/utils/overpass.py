@@ -82,7 +82,9 @@ class Overpass(object):
         except Exception:
             pass
 
-    def get_query(self,):
+    def get_query(
+        self,
+    ):
         """Get the overpass query used for this extract."""
         return self.query
 
@@ -198,7 +200,11 @@ class Overpass(object):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Runs an overpass query using the provided bounding box")
     parser.add_argument(
-        "-o", "--osm-file", required=False, dest="osm", help="The OSM file to write the query results to",
+        "-o",
+        "--osm-file",
+        required=False,
+        dest="osm",
+        help="The OSM file to write the query results to",
     )
     parser.add_argument(
         "-b",
@@ -208,7 +214,11 @@ if __name__ == "__main__":
         help="A comma separated list of coordinates in the format: miny,minx,maxy,maxx",
     )
     parser.add_argument(
-        "-u", "--url", required=False, dest="url", help="The url endpoint of the overpass interpreter",
+        "-u",
+        "--url",
+        required=False,
+        dest="url",
+        help="The url endpoint of the overpass interpreter",
     )
     parser.add_argument("-d", "--debug", action="store_true", help="Turn on debug output")
     args = parser.parse_args()

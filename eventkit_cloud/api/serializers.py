@@ -703,7 +703,7 @@ class UserSerializerFull(serializers.ModelSerializer):
 
 class UserDataSerializer(serializers.Serializer):
     """
-        Return a GeoJSON representation of the user data.
+    Return a GeoJSON representation of the user data.
     """
 
     user = serializers.SerializerMethodField()
@@ -1110,8 +1110,12 @@ class JobSerializer(serializers.Serializer):
     provider_task_list_status = serializers.SerializerMethodField()
     uid = serializers.UUIDField(read_only=True)
     url = serializers.HyperlinkedIdentityField(view_name="api:jobs-detail", lookup_field="uid")
-    name = serializers.CharField(max_length=100,)
-    description = serializers.CharField(max_length=255,)
+    name = serializers.CharField(
+        max_length=100,
+    )
+    description = serializers.CharField(
+        max_length=255,
+    )
     event = serializers.CharField(max_length=100, allow_blank=True, required=False)
     created_at = serializers.DateTimeField(read_only=True)
     updated_at = serializers.DateTimeField(read_only=True)
@@ -1175,7 +1179,9 @@ class JobSerializer(serializers.Serializer):
         )
         for data_provider_task in data_provider_tasks:
             serializer = ExportFormatSerializer(
-                data_provider_task.formats, many=True, context={"request": self.context["request"]},
+                data_provider_task.formats,
+                many=True,
+                context={"request": self.context["request"]},
             )
             exports.append({"provider": data_provider_task.provider.name, "formats": serializer.data})
         for data_provider_task in filtered_tasks:
@@ -1290,7 +1296,8 @@ class NotificationSerializer(serializers.ModelSerializer):
                 "type": str(ContentType.objects.get(id=type_id).model),
                 "id": getattr(obj, "{0}_object_id".format(related_type)),
                 "details": GenericNotificationRelatedSerializer(
-                    getattr(obj, related_type), context={"request": self.context["request"]},
+                    getattr(obj, related_type),
+                    context={"request": self.context["request"]},
                 ).data,
             }
 

@@ -7,7 +7,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eventkit_cloud.auth', '0001_initial'),
+        ('eventkit_cloud_auth', '0001_initial'),
     ]
 
     operations = [

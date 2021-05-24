@@ -26,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestGeopackage(TransactionTestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.path = settings.ABS_PATH()
         self.task_process_patcher = patch("eventkit_cloud.tasks.task_process.TaskProcess")
         self.task_process = self.task_process_patcher.start()

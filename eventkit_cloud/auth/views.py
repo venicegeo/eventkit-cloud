@@ -27,7 +27,11 @@ def oauth(request, redirect_url=None):
     """
     if getattr(settings, "OAUTH_AUTHORIZATION_URL", None):
         if request.GET.get("query"):
-            return HttpResponse(json.dumps({"name": settings.OAUTH_NAME}), content_type="application/json", status=200,)
+            return HttpResponse(
+                json.dumps({"name": settings.OAUTH_NAME}),
+                content_type="application/json",
+                status=200,
+            )
         else:
             params = [
                 ("client_id", settings.OAUTH_CLIENT_ID),
@@ -36,9 +40,19 @@ def oauth(request, redirect_url=None):
                 ("scope", settings.OAUTH_SCOPE),
             ]
             if redirect_url:
-                params += [("state", base64.b64encode(redirect_url.encode()),)]
+                params += [
+                    (
+                        "state",
+                        base64.b64encode(redirect_url.encode()),
+                    )
+                ]
             elif request.META.get("HTTP_REFERER"):
-                params += [("state", base64.b64encode(request.META.get("HTTP_REFERER").encode()),)]
+                params += [
+                    (
+                        "state",
+                        base64.b64encode(request.META.get("HTTP_REFERER").encode()),
+                    )
+                ]
             encoded_params = urlencode(params)
             return redirect("{0}?{1}".format(settings.OAUTH_AUTHORIZATION_URL.rstrip("/"), encoded_params))
     else:
@@ -59,7 +73,11 @@ def callback(request):
             return redirect("dashboard")
         else:
             logger.error("User could not be logged in.")
-            return HttpResponse('{"error":"User could not be logged in"}', content_type="application/json", status=401,)
+            return HttpResponse(
+                '{"error":"User could not be logged in"}',
+                content_type="application/json",
+                status=401,
+            )
     except Exception as e:
         # Unless otherwise noted, we want any exception to redirect to the error page.
         logger.error("Exception occurred during oauth, redirecting user.")
@@ -71,7 +89,7 @@ def callback(request):
 def logout(request):
     """Log out user
 
-        If user is an Oauth user it will pass back an OAuth redirect to be handled by UI.
+    If user is an Oauth user it will pass back an OAuth redirect to be handled by UI.
     """
     is_oauth = hasattr(request.user, "oauth")
     auth_logout(request)

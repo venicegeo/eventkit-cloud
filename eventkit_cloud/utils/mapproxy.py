@@ -254,7 +254,9 @@ class MapproxyGeopackage(object):
         return conf_dict, seed_configuration, mapproxy_configuration
 
     # @retry
-    def convert(self,):
+    def convert(
+        self,
+    ):
         """
         Convert external service to gpkg.
         """

@@ -8,7 +8,7 @@ def read(*rnames):
 
 setup(
     name="eventkit",
-    version="1.9.0",
+    version="1.10.0",
     author="Joseph Svrcek",
     author_email="joseph.svrcek@rgi-corp.com",
     description="Eventkit Cloud",
@@ -19,7 +19,7 @@ setup(
         'Development Status :: 4 - Beta',
         'Framework :: Django',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: JavaScript'
     ],
     license="BSD",

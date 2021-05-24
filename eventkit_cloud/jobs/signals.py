@@ -57,7 +57,9 @@ def job_post_save(sender, instance, created, **kwargs):
 
     if created:
         jp = JobPermission.objects.create(
-            job=instance, content_object=instance.user, permission=JobPermissionLevel.ADMIN.value,
+            job=instance,
+            content_object=instance.user,
+            permission=JobPermissionLevel.ADMIN.value,
         )
         jp.save()
 
@@ -102,7 +104,8 @@ def provider_pre_save(sender, instance, **kwargs):
                 make_dirs(provider_image_dir)
                 # Return a file system path to the image.
                 filepath = save_thumbnail(
-                    instance.preview_url, os.path.join(provider_image_dir, get_provider_thumbnail_name(instance.slug)),
+                    instance.preview_url,
+                    os.path.join(provider_image_dir, get_provider_thumbnail_name(instance.slug)),
                 )
                 # Return a MapImageSnapshot representing the thumbnail
                 thumbnail_snapshot = make_thumbnail_downloadable(filepath, instance.uid)

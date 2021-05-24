@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestOSMToPBF(TransactionTestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.task_process_patcher = patch("eventkit_cloud.utils.pbf.TaskProcess")
         self.task_process = self.task_process_patcher.start()
         self.addCleanup(self.task_process_patcher.stop)

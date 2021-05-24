@@ -112,13 +112,13 @@ class FileProducingTaskResult(UIDMixin, NotificationModelMixin):
 
     def user_can_download(self, user: User):
         """
-            Checks to see if the user has all of the required permissions to download the file.  To not make these
-            requests slower ideally the downloadable will have already
-            select_related("export_task__export_provider_task__provider", "export_task__export_provider_task__run")
-            :param user: The user requesting the file.
-            :param downloadable: The downloadable file.
-            :return:
-            """
+        Checks to see if the user has all of the required permissions to download the file.  To not make these
+        requests slower ideally the downloadable will have already
+        select_related("export_task__export_provider_task__provider", "export_task__export_provider_task__run")
+        :param user: The user requesting the file.
+        :param downloadable: The downloadable file.
+        :return:
+        """
 
         jobs = JobPermission.userjobs(user, JobPermissionLevel.READ.value)
         job = jobs.filter(runs__data_provider_task_records__tasks__result=self).first()
@@ -319,7 +319,11 @@ class DataProviderTaskRecord(UIDMixin, TimeStampedModelMixin, TimeTrackingModelM
     estimated_size = models.FloatField(null=True, blank=True)
     estimated_duration = models.FloatField(null=True, blank=True)
     preview = models.ForeignKey(
-        MapImageSnapshot, blank=True, null=True, on_delete=models.SET_NULL, help_text="A preview for a provider task.",
+        MapImageSnapshot,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        help_text="A preview for a provider task.",
     )
 
     class Meta:
@@ -393,7 +397,11 @@ class ExportTaskRecord(UIDMixin, TimeStampedModelMixin, TimeTrackingModelMixin):
     cancel_user = models.ForeignKey(User, null=True, blank=True, editable=False, on_delete=models.CASCADE)
     display = models.BooleanField(default=False)
     result = models.OneToOneField(
-        "FileProducingTaskResult", on_delete=models.CASCADE, null=True, blank=True, related_name="export_task",
+        "FileProducingTaskResult",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="export_task",
     )
     hide_download = models.BooleanField(default=False)
 
@@ -518,8 +526,8 @@ class RunZipFile(UIDMixin, TimeStampedModelMixin, TimeTrackingModelMixin):
 
 def get_run_zip_file_slug_sets(new_run, old_run_zip_files):
     """
-        :param old_run_zip_files: A list of run zip files.
-        :return: A set of provider slugs for each zip file.
+    :param old_run_zip_files: A list of run zip files.
+    :return: A set of provider slugs for each zip file.
     """
 
     data_provider_task_records = new_run.data_provider_task_records.exclude(provider__isnull=True)

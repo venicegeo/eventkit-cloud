@@ -44,12 +44,22 @@ def get_cache_key(obj=None, attribute=None, uid=None, model_name=None):
 
 
 def set_cache_value(
-    obj=None, uid=None, attribute=None, value=None, model_name=None, expiration=DEFAULT_CACHE_EXPIRATION,
+    obj=None,
+    uid=None,
+    attribute=None,
+    value=None,
+    model_name=None,
+    expiration=DEFAULT_CACHE_EXPIRATION,
 ):
     return cache.set(
-        get_cache_key(obj=obj, attribute=attribute, uid=str(uid), model_name=model_name), value, timeout=expiration,
+        get_cache_key(obj=obj, attribute=attribute, uid=str(uid), model_name=model_name),
+        value,
+        timeout=expiration,
     )
 
 
 def get_cache_value(obj=None, uid=None, attribute=None, model_name=None, default=None):
-    return cache.get(get_cache_key(obj=obj, attribute=attribute, uid=str(uid), model_name=model_name), default,)
+    return cache.get(
+        get_cache_key(obj=obj, attribute=attribute, uid=str(uid), model_name=model_name),
+        default,
+    )

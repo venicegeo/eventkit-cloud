@@ -155,7 +155,9 @@ def handle_basic_auth(func):
 
 
 class AuthSession(object):
-    def __init__(self,):
+    def __init__(
+        self,
+    ):
         self.session = requests.session()
         self.cookies = self.session.cookies
 

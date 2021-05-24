@@ -32,7 +32,9 @@ class TestJobPermissions(APITestCase):
         self.config = None
         self.tags = None
 
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.path = os.path.dirname(os.path.realpath(__file__))
         self.group, created = Group.objects.get_or_create(name="TestDefaultExportExtentGroup")
         self.user1 = User.objects.create_user(username="user_1", email="demo@demo.com", password="demo")
@@ -79,12 +81,16 @@ class TestJobPermissions(APITestCase):
         GroupPermission.objects.create(group=group2, user=self.user1, permission=GroupPermissionLevel.ADMIN.value)
         GroupPermission.objects.create(group=group2, user=self.user2, permission=GroupPermissionLevel.MEMBER.value)
 
-    def test_list(self,):
+    def test_list(
+        self,
+    ):
         expected = "/api/jobs"
         url = reverse("api:jobs-list")
         self.assertEqual(expected, url)
 
-    def test_get_job_defaults(self,):
+    def test_get_job_defaults(
+        self,
+    ):
         expected = "/api/jobs/{0}".format(self.job.uid)
         url = reverse("api:jobs-detail", args=[self.job.uid])
         self.assertEqual(expected, url)
@@ -97,7 +103,9 @@ class TestJobPermissions(APITestCase):
         self.assertEqual(response.data["permissions"]["members"][self.user1.username], "ADMIN")
         self.assertEqual(response.data["visibility"], "PRIVATE")
 
-    def test_permissions_syntax(self,):
+    def test_permissions_syntax(
+        self,
+    ):
         expected = "/api/jobs/{0}".format(self.job.uid)
         url = reverse("api:jobs-detail", args=[self.job.uid])
         self.assertEqual(expected, url)
@@ -139,7 +147,9 @@ class TestJobPermissions(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(response.data[0]["detail"], "invalid permission value : ADMEN")
 
-    def test_shared_user_permissions(self,):
+    def test_shared_user_permissions(
+        self,
+    ):
         expected = "/api/jobs/{0}".format(self.job.uid)
         url = reverse("api:jobs-detail", args=[self.job.uid])
         self.assertEqual(expected, url)
@@ -176,7 +186,9 @@ class TestJobPermissions(APITestCase):
         self.assertEqual(response.data["visibility"], "SHARED")
         self.assertEqual(response.data["permissions"]["members"][self.user1.username], "READ")
 
-    def test_private_user_permissions(self,):
+    def test_private_user_permissions(
+        self,
+    ):
         expected = "/api/jobs/{0}".format(self.job.uid)
         url = reverse("api:jobs-detail", args=[self.job.uid])
         self.assertEqual(expected, url)
@@ -208,7 +220,9 @@ class TestJobPermissions(APITestCase):
         response = self.client.get(url)
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
-    def test_public_user_permissions(self,):
+    def test_public_user_permissions(
+        self,
+    ):
         expected = "/api/jobs/{0}".format(self.job.uid)
         url = reverse("api:jobs-detail", args=[self.job.uid])
         self.assertEqual(expected, url)
@@ -242,7 +256,9 @@ class TestJobPermissions(APITestCase):
         self.assertEqual(response.data["visibility"], "PUBLIC")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
-    def test_shared_group_permissions(self,):
+    def test_shared_group_permissions(
+        self,
+    ):
         expected = "/api/jobs/{0}".format(self.job.uid)
         url = reverse("api:jobs-detail", args=[self.job.uid])
         self.assertEqual(expected, url)
@@ -308,7 +324,9 @@ class TestExportRunViewSet(APITestCase):
         self.export_run = None
         self.run_uid = None
 
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.group, created = Group.objects.get_or_create(name="TestDefaultExportExtentGroup")
         self.user1 = User.objects.create_user(username="user_1", email="demo@demo.com", password="demo")
         self.user2 = User.objects.create_user(username="user_2", email="demo@demo.com", password="demo")
@@ -359,7 +377,9 @@ class TestExportRunViewSet(APITestCase):
         result = response.data
         self.assertEqual(self.run_uid, result[0].get("uid"))
 
-    def test_retrieve_run(self,):
+    def test_retrieve_run(
+        self,
+    ):
         expected = "/api/runs/{0}".format(self.run_uid)
 
         self.assertEqual(expected, self.run_url)
@@ -369,7 +389,9 @@ class TestExportRunViewSet(APITestCase):
         # make sure we get the correct uid back out
         self.assertEqual(self.run_uid, result[0].get("uid"))
 
-    def test_private_run(self,):
+    def test_private_run(
+        self,
+    ):
         token = Token.objects.create(user=self.user2)
         self.client.credentials(
             HTTP_AUTHORIZATION="Token " + token.key,
@@ -382,7 +404,9 @@ class TestExportRunViewSet(APITestCase):
         result = response.data
         self.assertEqual(result, [])
 
-    def test_public_sharing(self,):
+    def test_public_sharing(
+        self,
+    ):
 
         joburl = reverse("api:jobs-detail", args=[self.job.uid])
 
@@ -398,7 +422,9 @@ class TestExportRunViewSet(APITestCase):
 
         self.assert_user_access(self.user2)
 
-    def test_user_sharing(self,):
+    def test_user_sharing(
+        self,
+    ):
         request_data = {"permissions": {"members": {self.user1.username: "ADMIN", self.user2.username: "ADMIN"}}}
 
         response = self.client.patch(
@@ -419,7 +445,9 @@ class TestExportRunViewSet(APITestCase):
         result = response.data
         self.assertEqual(result, [])
 
-    def test_group_sharing(self,):
+    def test_group_sharing(
+        self,
+    ):
 
         request_data = {"permissions": {"groups": {self.group1.name: "ADMIN"}}}
 

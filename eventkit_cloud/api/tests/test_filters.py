@@ -16,7 +16,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestAttributeClassFilter(APITestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.user = User.objects.create_user(username="demo1", email="demo@demo.com", password="demo")
         self.attribute_class = AttributeClass.objects.create(name="test1", slug="test1")
         extents = (-3.9, 16.1, 7.0, 27.6)
@@ -75,7 +77,9 @@ class TestJobFilter(APITestCase):
         self.export_run3 = None
         super(TestJobFilter, self).__init__(*args, **kwargs)
 
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         extents = (-3.9, 16.1, 7.0, 27.6)
         bbox = Polygon.from_bbox(extents)
         the_geom = GEOSGeometry(bbox, srid=4326)
@@ -119,39 +123,51 @@ class TestJobFilter(APITestCase):
             HTTP_HOST="testserver",
         )
 
-    def test_filterset_no_user(self,):
+    def test_filterset_no_user(
+        self,
+    ):
         url = reverse("api:jobs-list")
         url += "?start=2015-01-01T00:00:00.000000Z&end=2030-08-01T00:00:00.000000Z"
         response = self.client.get(url)
         self.assertEqual(2, len(response.data))
 
-    def test_filterset_with_user(self,):
+    def test_filterset_with_user(
+        self,
+    ):
         url = reverse("api:jobs-list")
         url += "?start=2015-01-01T00:00:00.000000Z&end=2030-08-01T00:00:00.000000Z&user=demo1"
         response = self.client.get(url)
         self.assertEqual(2, len(response.data))
 
-    def test_filterset_featured(self,):
+    def test_filterset_featured(
+        self,
+    ):
         url = reverse("api:jobs-list")
         url += "?featured=true"
         response = self.client.get(url)
         self.assertEqual(0, len(response.data))
 
-    def test_filterset_projection_3857(self,):
+    def test_filterset_projection_3857(
+        self,
+    ):
         url = reverse("api:runs-list")
         url += "?projections=3857"
         response = self.client.get(url)
         self.assertEqual(1, len(response.data))
         self.assertEqual(self.job3.name, response.data[0]["job"]["name"])
 
-    def test_filterset_both_projections(self,):
+    def test_filterset_both_projections(
+        self,
+    ):
         """Expect both export1 and export3 to be found."""
         url = reverse("api:runs-list")
         url += "?projections=3857,4326"
         response = self.client.get(url)
         self.assertEqual(2, len(response.data))
 
-    def test_filterset_projection_4326(self,):
+    def test_filterset_projection_4326(
+        self,
+    ):
         url = reverse("api:runs-list")
         url += "?projections=4326"
         response = self.client.get(url)

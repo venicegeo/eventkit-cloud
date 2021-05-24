@@ -49,7 +49,11 @@ class LockingTask(UserDetailsBase):
         """
         Unique string for task as lock key
         """
-        return "TaskLock_%s_%s_%s" % (self.__class__.__name__, self.request.id, self.request.retries,)
+        return "TaskLock_%s_%s_%s" % (
+            self.__class__.__name__,
+            self.request.id,
+            self.request.retries,
+        )
 
     def acquire_lock(self, lock_key, value="True"):
         """

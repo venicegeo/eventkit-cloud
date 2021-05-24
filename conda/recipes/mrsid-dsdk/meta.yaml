@@ -1,0 +1,34 @@
+
+package:
+  name: "mrsid-sdk"
+  version: "9.5.4"
+
+source:
+  fn: MrSID_DSDK-9.5.4.4709-rhel6.x86-64.gcc531.tar.gz
+  url: https://bin.extensis.com/download/developer/MrSID_DSDK-9.5.4.4709-rhel6.x86-64.gcc531.tar.gz
+
+build:
+  number: 0
+
+requirements:
+  build: 
+    - {{ compiler('c') }}
+    - automake
+    - autoconf
+  host:
+    - expat
+    - proj
+    - zlib
+  run:
+    - expat
+    - proj
+    - zlib
+
+
+about:
+  home: https://www.extensis.com/support/developers
+  license: Commercial
+  license_file: https://www.extensis.com/support/developers/mrsidsdkeula
+  summary: |
+    Extensis offers a range of MrSID Software Kits (SDKs) and development tools for integrating decode (viewing) capabilities and encoding technologies. Decode SDKs for MrSID are provided free of charge for development. This allows developers to integrate viewing of MrSID into their applications. For SDK support questions, please contact Extensis Technical Support.
+    The MrSID 9.5 SDK, with support for MrSID Generation 4 files (MG4), is now available. With this SDK you can view and decode MG4 files containing both raster LiDAR data, in addition to MrSID Generation 3, MrSID Generation 2 and JPEG 2000 files. This version adds performance improvements so your images render even faster.

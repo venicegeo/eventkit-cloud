@@ -33,10 +33,17 @@ class EventKitClient(object):
             self.client.get(self.cert_url, cert=certificate)
         elif username and password:
             login_data = dict(
-                username=username, password=password, submit="Log in", csrfmiddlewaretoken=self.csrftoken, next="/",
+                username=username,
+                password=password,
+                submit="Log in",
+                csrfmiddlewaretoken=self.csrftoken,
+                next="/",
             )
             self.client.post(
-                self.login_url, data=login_data, headers=dict(Referer=self.login_url), auth=(username, password),
+                self.login_url,
+                data=login_data,
+                headers=dict(Referer=self.login_url),
+                auth=(username, password),
             )
         else:
             raise Exception("Unable to login without a certificate or username/password.")
@@ -47,9 +54,12 @@ class EventKitClient(object):
         self.client.get(self.create_export_url)
         self.csrftoken = self.client.cookies.get("csrftoken")
 
-    def get_providers(self,):
+    def get_providers(
+        self,
+    ):
         response = self.client.get(
-            self.providers_url, headers={"X-CSRFToken": self.csrftoken, "Referer": self.create_export_url},
+            self.providers_url,
+            headers={"X-CSRFToken": self.csrftoken, "Referer": self.create_export_url},
         )
         if response.status_code != 200:
             logger.error("There was an error getting the providers.")
@@ -124,7 +134,9 @@ class EventKitClient(object):
             "provider_tasks": provider_tasks,
         }
         response = self.client.post(
-            self.jobs_url, json=data, headers={"X-CSRFToken": self.csrftoken, "Referer": self.create_export_url},
+            self.jobs_url,
+            json=data,
+            headers={"X-CSRFToken": self.csrftoken, "Referer": self.create_export_url},
         )
         if response.status_code != 202:
             logger.error("There was an error creating the job: {0}".format(kwargs.get("name")))
@@ -139,7 +151,10 @@ class EventKitClient(object):
         """
         url = f"{self.jobs_url}/{job_uid}/run?format=json"
 
-        response = self.client.post(url, headers={"X-CSRFToken": self.csrftoken, "Referer": self.create_export_url},)
+        response = self.client.post(
+            url,
+            headers={"X-CSRFToken": self.csrftoken, "Referer": self.create_export_url},
+        )
         if not response.ok:
             logger.error(response.content.decode())
             logger.error(url)
@@ -258,7 +273,8 @@ class EventKitClient(object):
             run_url = self.runs_url.rstrip("/"), run_uid
             logger.debug(run_url)
             response = self.client.get(
-                "{}/{}".format(self.runs_url.rstrip("/"), run_uid), headers={"X-CSRFToken": self.csrftoken},
+                "{}/{}".format(self.runs_url.rstrip("/"), run_uid),
+                headers={"X-CSRFToken": self.csrftoken},
             )
             if not response.ok:
                 logger.info(response.content.decode())

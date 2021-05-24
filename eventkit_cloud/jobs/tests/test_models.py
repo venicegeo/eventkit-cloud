@@ -70,7 +70,9 @@ class TestJob(TestCase):
         self.job.data_provider_tasks.add(provider_task)
         self.job.save()
 
-    def test_job_creation(self,):
+    def test_job_creation(
+        self,
+    ):
         saved_job = Job.objects.all()[0]
         self.assertEqual(self.job, saved_job)
         self.assertEqual(self.uid, saved_job.uid)
@@ -85,7 +87,9 @@ class TestJob(TestCase):
         self.assertEqual(4, len(saved_job.json_tags))
         self.assertEqual(False, saved_job.include_zipfile)  # default
 
-    def test_job_creation_with_config(self,):
+    def test_job_creation_with_config(
+        self,
+    ):
         saved_job = Job.objects.all()[0]
         self.assertEqual(self.job, saved_job)
         self.assertEqual(self.uid, saved_job.uid)
@@ -99,7 +103,9 @@ class TestJob(TestCase):
         saved_job.preset = hdm_preset
         self.assertEqual(hdm_preset.json_tags, saved_job.preset.json_tags)
 
-    def test_spatial_fields(self,):
+    def test_spatial_fields(
+        self,
+    ):
         bbox = Polygon.from_bbox((-7.96, 22.6, -8.14, 27.12))  # in africa
         the_geom = MultiPolygon(GEOSGeometry(bbox, srid=4326), srid=4326)
         the_geog = MultiPolygon(GEOSGeometry(bbox), srid=4326)
@@ -113,18 +119,24 @@ class TestJob(TestCase):
         self.assertEqual(the_geog, geog)
         self.assertEqual(the_geom_webmercator, geom_web)
 
-    def test_fields(self,):
+    def test_fields(
+        self,
+    ):
         job = Job.objects.all()[0]
         self.assertEqual("TestJob", job.name)
         self.assertEqual("Test description", job.description)
         self.assertEqual("Nepal activation", job.event)
         self.assertEqual(self.user, job.user)
 
-    def test_str(self,):
+    def test_str(
+        self,
+    ):
         job = Job.objects.all()[0]
         self.assertEqual(str(job), "TestJob")
 
-    def test_job_region(self,):
+    def test_job_region(
+        self,
+    ):
         bbox = Polygon.from_bbox((-7.96, 22.6, -8.14, 27.12))  # africa
         region = Region.objects.filter(the_geom__contains=bbox)[0]
         self.assertIsNotNone(region)
@@ -134,19 +146,25 @@ class TestJob(TestCase):
         saved_job = Job.objects.all()[0]
         self.assertEqual(saved_job.region, region)
 
-    def test_overpass_extents(self,):
+    def test_overpass_extents(
+        self,
+    ):
         job = Job.objects.all()[0]
         extents = job.overpass_extents
         self.assertIsNotNone(extents)
         self.assertEqual(4, len(extents.split(",")))
 
-    def test_extents(self,):
+    def test_extents(
+        self,
+    ):
         job = Job.objects.all()[0]
         extents = job.extents
         self.assertIsNotNone(extents)
         self.assertEqual(4, len(extents))
 
-    def test_categorised_tags(self,):
+    def test_categorised_tags(
+        self,
+    ):
         tags = DatamodelPreset.objects.get(name="hdm").json_tags
         self.assertEqual(259, len(tags))
 
@@ -160,7 +178,9 @@ class TestJob(TestCase):
         self.assertEqual(16, len(categories["lines"]))
         self.assertEqual(26, len(categories["polygons"]))
 
-    def test_tags(self,):
+    def test_tags(
+        self,
+    ):
         tags = DatamodelPreset.objects.get(name="hdm").json_tags
         self.assertIsNotNone(tags)
         self.assertEqual(259, len(tags))
@@ -171,13 +191,17 @@ class TestJob(TestCase):
 
 
 class TestExportFormat(TestCase):
-    def test_str(self,):
+    def test_str(
+        self,
+    ):
         kml = ExportFormat.objects.get(slug="kml")
         self.assertEqual(str(kml), "KML Format")
 
 
 class TestRegion(TestCase):
-    def test_load_region(self,):
+    def test_load_region(
+        self,
+    ):
         ds = DataSource(os.path.dirname(os.path.realpath(__file__)) + "/../migrations/africa.geojson")
         layer = ds[0]
         geom = layer.get_geoms(geos=True)[0]
@@ -194,20 +218,26 @@ class TestRegion(TestCase):
         saved_region = Region.objects.get(uid=region.uid)
         self.assertEqual(region, saved_region)
 
-    def test_africa_region(self,):
+    def test_africa_region(
+        self,
+    ):
         africa = Region.objects.get(name="Africa")
         self.assertIsNotNone(africa)
         self.assertEqual("Africa", africa.name)
         self.assertIsNotNone(africa.the_geom)
 
-    def test_bbox_intersects_region(self,):
+    def test_bbox_intersects_region(
+        self,
+    ):
         bbox = Polygon.from_bbox((-3.9, 16.6, 7.0, 27.6))
         self.assertIsNotNone(bbox)
         africa = Region.objects.get(name="Africa")
         self.assertIsNotNone(africa)
         self.assertTrue(africa.the_geom.intersects(bbox))
 
-    def test_get_region_for_bbox(self,):
+    def test_get_region_for_bbox(
+        self,
+    ):
         bbox = Polygon.from_bbox((-3.9, 16.6, 7.0, 27.6))
         regions = Region.objects.all()
         found = []
@@ -220,7 +250,9 @@ class TestRegion(TestCase):
 
 
 class TestJobRegionIntersection(TestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.formats = ExportFormat.objects.all()  # pre-loaded by 'insert_export_formats' migration
         self.group, created = Group.objects.get_or_create(name="TestDefaultExportExtentGroup")
         with patch("eventkit_cloud.jobs.signals.Group") as mock_group:
@@ -234,7 +266,9 @@ class TestJobRegionIntersection(TestCase):
         self.job.formats = self.formats
         self.job.save()
 
-    def test_job_region_intersection(self,):
+    def test_job_region_intersection(
+        self,
+    ):
         job = Job.objects.all()[0]
         # use the_geog
         regions = (
@@ -251,7 +285,9 @@ class TestJobRegionIntersection(TestCase):
         self.assertEqual("Africa", africa.name)
         self.assertTrue(asia.intersection > africa.intersection)
 
-    def test_job_outside_region(self,):
+    def test_job_outside_region(
+        self,
+    ):
         job = Job.objects.all()[0]
         bbox = Polygon.from_bbox((2.74, 47.66, 21.61, 60.24))  # outside any region
         the_geom = MultiPolygon(GEOSGeometry(bbox, srid=4326))
@@ -264,7 +300,9 @@ class TestJobRegionIntersection(TestCase):
 class TestTag(TestCase):
     fixtures = ("datamodel_presets.json",)
 
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.formats = ExportFormat.objects.all()  # pre-loaded by 'insert_export_formats' migration
         self.group, created = Group.objects.get_or_create(name="TestDefaultExportExtentGroup")
         with patch("eventkit_cloud.jobs.signals.Group") as mock_group:
@@ -282,7 +320,9 @@ class TestTag(TestCase):
         self.job.save()
         self.path = os.path.dirname(os.path.realpath(__file__))
 
-    def test_create_tags(self,):
+    def test_create_tags(
+        self,
+    ):
         tags = [
             {"key": "aeroway", "value": "aerodrome", "geom": ["node", "area"]},
         ]
@@ -294,7 +334,9 @@ class TestTag(TestCase):
         self.assertEqual(1, len(self.job.json_tags))
         self.assertEqual(["node", "area"], geom_types)
 
-    def test_save_tags_from_preset(self,):
+    def test_save_tags_from_preset(
+        self,
+    ):
         tags = DatamodelPreset.objects.get(name="hdm").json_tags
         self.assertIsNotNone(tags)
         self.assertEqual(259, len(tags))
@@ -303,7 +345,9 @@ class TestTag(TestCase):
 
         self.assertEqual(259, len(self.job.json_tags))
 
-    def test_get_categorised_tags(self,):
+    def test_get_categorised_tags(
+        self,
+    ):
         tags = DatamodelPreset.objects.get(name="hdm").json_tags
         self.assertIsNotNone(tags)
         self.assertEqual(259, len(tags))
@@ -313,10 +357,14 @@ class TestTag(TestCase):
 
 
 class TestExportProfile(TestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.group, created = Group.objects.get_or_create(name="TestDefaultExportExtentGroup")
 
-    def test_export_profile(self,):
+    def test_export_profile(
+        self,
+    ):
         profile = ExportProfile.objects.create(name="DefaultExportProfile", max_extent=2500000, group=self.group)
         self.assertEqual(self.group.export_profile, profile)
         self.assertEqual("DefaultExportProfile", profile.name)
@@ -324,7 +372,9 @@ class TestExportProfile(TestCase):
 
 
 class TestJobPermission(TestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.user1 = User.objects.create_user(username="demo1", email="demo@demo.com", password="demo")
         self.user2 = User.objects.create_user(username="demo2", email="demo@demo.com", password="demo")
         self.user3 = User.objects.create_user(username="demo3", email="demo@demo.com", password="demo")
@@ -437,7 +487,9 @@ class TestDataProvider(TestCase):
             self.data_provider.config = yaml.dump(config)
             self.assertEqual(expected_url, self.data_provider.footprint_url)
 
-    def test_layers(self,):
+    def test_layers(
+        self,
+    ):
 
         # Test single layer vector source
         expected_layer = "test"

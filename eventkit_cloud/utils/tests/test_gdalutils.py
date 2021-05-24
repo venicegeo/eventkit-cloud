@@ -26,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestGdalUtils(TestCase):
-    def setUp(self,):
+    def setUp(
+        self,
+    ):
         self.path = os.path.dirname(os.path.realpath(__file__))
         self.task_process_patcher = patch("eventkit_cloud.utils.gdalutils.TaskProcess")
         self.task_process = self.task_process_patcher.start()
@@ -352,7 +354,9 @@ class TestGdalUtils(TestCase):
         mock_dataset.GetRasterBand.assert_called_once_with(expected_band)
         mock_dataset.GetRasterBand.reset_mock()
 
-    def test_get_distance(self,):
+    def test_get_distance(
+        self,
+    ):
         expected_distance = 972.38
         point_a = [-72.377162, 42.218109]
         point_b = [-72.368493, 42.218903]

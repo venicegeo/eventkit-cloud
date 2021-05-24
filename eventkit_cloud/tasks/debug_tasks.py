@@ -10,8 +10,7 @@ logger = getLogger(__name__)
 
 @app.task(name="TestChain", bind=True)
 def test_chain(self, subtask_queuename=None):
-    """ Returns the AsyncResult of a chain of 4 test_task queued on @subtask_queuename.
-    """
+    """Returns the AsyncResult of a chain of 4 test_task queued on @subtask_queuename."""
     assert subtask_queuename is not None
 
     logger.info("TestChain subtask_queuename: {}".format(subtask_queuename))

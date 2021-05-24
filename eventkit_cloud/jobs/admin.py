@@ -70,7 +70,9 @@ class JobAdmin(OSMGeoAdmin):
 
         # noinspection PyProtectedMember
         return render(
-            request, self.update_template, {"regions": regions, "selected": selected, "opts": self.model._meta},
+            request,
+            self.update_template,
+            {"regions": regions, "selected": selected, "opts": self.model._meta},
         )
 
     select_exports.short_description = "Assign a region to the selected exports"
@@ -100,7 +102,11 @@ class JobAdmin(OSMGeoAdmin):
         urls = super(JobAdmin, self).get_urls()
         update_urls = [
             url(r"^select/$", self.admin_site.admin_view(self.select_exports)),
-            url(r"^update/$", self.admin_site.admin_view(self.update_exports), name="update_regions",),
+            url(
+                r"^update/$",
+                self.admin_site.admin_view(self.update_exports),
+                name="update_regions",
+            ),
         ]
         return update_urls + urls
 

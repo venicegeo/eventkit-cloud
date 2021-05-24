@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: config/Dockerfile
-    image: eventkit/eventkit-base:1.9.0
+    image: eventkit/eventkit-base:1.10.0
     volumes:
       - ./:/var/lib/eventkit/
     user: eventkit
@@ -80,7 +80,7 @@ services:
     extra_hosts:
       - "${SITE_NAME}:${SITE_IP}"
   map:
-    image: eventkit/eventkit-base:1.9.0
+    image: eventkit/eventkit-base:1.10.0
     volumes:
       # using the root directory here will break mapproxy tile locks.
       - ./scripts:/var/lib/eventkit/scripts
@@ -122,7 +122,7 @@ services:
     extra_hosts:
       - "${SITE_NAME}:${SITE_IP}"
   celery:
-    image: eventkit/eventkit-base:1.9.0
+    image: eventkit/eventkit-base:1.10.0
     volumes:
       - ./:/var/lib/eventkit/
       - ./scripts/run-celery.sh:/home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.7/site-packages/scripts/run-celery.sh
@@ -175,13 +175,13 @@ services:
       - "${SITE_NAME}:${SITE_IP}"
     command: /home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.7/site-packages/scripts/run-celery.sh
   memcached:
-    image: eventkit/eventkit-base:1.9.0
+    image: eventkit/eventkit-base:1.10.0
     expose:
       - "11211"
     entrypoint: >
       /bin/bash -c "source activate eventkit-cloud && memcached -m 2048 -I 10m"
   celery-beat:
-    image: eventkit/eventkit-base:1.9.0
+    image: eventkit/eventkit-base:1.10.0
     volumes:
       - ./:/var/lib/eventkit/
       - ./scripts/run-celery-beat.sh:/home/eventkit/miniconda3/envs/eventkit-cloud/lib/python3.7/site-packages/scripts/run-celery-beat.sh
@@ -262,7 +262,7 @@ services:
       - SITE_NAME=${SITE_NAME}
       - LOG_LEVEL=warn
   flower:
-    image: eventkit/eventkit-base:1.9.0
+    image: eventkit/eventkit-base:1.10.0
     volumes:
       - ./:/var/lib/eventkit/
     user: eventkit

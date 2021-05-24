@@ -1,13 +1,13 @@
 {% set name = "django-timezone-field" %}
-{% set version = "4.0" %}
+{% set version = "4.1.2" %}
 
 package:
   name: "{{ name|lower }}"
   version: "{{ version }}"
 
 source:
-  url: https://files.pythonhosted.org/packages/c9/33/dc63f43177d1489006a58d95ac46fdf2f15f63f5da2ff1f72917c9c3b090/{{ name }}-{{ version }}.tar.gz
-  sha256: 7e3620fe2211c2d372fad54db8f86ff884098d018d56fda4dca5e64929e05ffc
+  url: https://files.pythonhosted.org/packages/3d/ce/ba24bb9b0b33243a829836a3f18ce030e5d0738965faf01fb84942688c80/{{ name }}-{{ version }}.tar.gz
+  sha256: cffac62452d060e365938aa9c9f7b72d70d8b26b9c60243bce227b35abd1b9df
 
 build:
   number: 0

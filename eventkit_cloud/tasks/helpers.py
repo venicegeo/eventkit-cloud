@@ -287,7 +287,9 @@ def generate_qgs_style(metadata, skip_formats=UNSUPPORTED_CARTOGRAPHY_FORMATS):
 
     if len(provider_details) == 1:
         style_file_name = "{0}-{1}-{2}.qgs".format(
-            job_name, normalize_name(provider_details[0]["slug"]), default_format_time(timezone.now()),
+            job_name,
+            normalize_name(provider_details[0]["slug"]),
+            default_format_time(timezone.now()),
         )
     else:
         style_file_name = "{0}-{1}.qgs".format(job_name, default_format_time(timezone.now()))
@@ -305,16 +307,21 @@ def generate_qgs_style(metadata, skip_formats=UNSUPPORTED_CARTOGRAPHY_FORMATS):
     }
 
     with open(style_file, "wb") as open_file:
-        open_file.write(render_to_string("styles/Style.qgs", context=context,).encode())
+        open_file.write(
+            render_to_string(
+                "styles/Style.qgs",
+                context=context,
+            ).encode()
+        )
     return style_file
 
 
 def remove_formats(metadata: dict, formats: List[str] = UNSUPPORTED_CARTOGRAPHY_FORMATS):
     """
-        Used to remove formats from the metadata especially so that they don't show up in the cartography.
-        :param data_sources: A dict of metadata provided by get_metadata.
-        :param formats: A list of unsupported file extensions (i.e. .gpx)
-        :return: The path to the generated qgs file.
+    Used to remove formats from the metadata especially so that they don't show up in the cartography.
+    :param data_sources: A dict of metadata provided by get_metadata.
+    :param formats: A list of unsupported file extensions (i.e. .gpx)
+    :return: The path to the generated qgs file.
     """
     # Create a new dict to not alter the input data.
     if metadata is None:
@@ -979,7 +986,9 @@ def get_or_update_session(username=None, password=None, session=None, max_retrie
     cert_path, cert_pass = auth_requests.get_cert_info({"cert_info": cert_info})
     if cert_path and cert_pass:
         adapter = requests_pkcs12.Pkcs12Adapter(
-            pkcs12_filename=cert_path, pkcs12_password=cert_pass, max_retries=max_retries,
+            pkcs12_filename=cert_path,
+            pkcs12_password=cert_pass,
+            max_retries=max_retries,
         )
         session.mount("https://", adapter)
 
@@ -1086,7 +1095,9 @@ def find_in_zip(
 
 
 def extract_metadata_files(
-    zip_filepath: str, destination: str, extensions: list = [".md", ".txt", ".doc", ".docx", ".csv", ".xls", ".xlsx"],
+    zip_filepath: str,
+    destination: str,
+    extensions: list = [".md", ".txt", ".doc", ".docx", ".csv", ".xls", ".xlsx"],
 ):
     """
     Function extract metadata files from archives.

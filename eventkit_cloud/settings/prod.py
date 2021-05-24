@@ -279,7 +279,7 @@ if os.getenv("MEMCACHED"):
         "primary_cache": {
             "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
             "LOCATION": os.getenv("MEMCACHED"),
-            "OPTIONS": {"server_max_value_length": os.getenv("MEMCACHED_SERVER_MAX_VALUE_LENGTH", 1024 * 1024 * 10)},
+            # "OPTIONS": {"server_max_value_length": os.getenv("MEMCACHED_SERVER_MAX_VALUE_LENGTH", 1024 * 1024 * 10)},
         },
         "fallback_cache": {"BACKEND": "django.core.cache.backends.db.DatabaseCache", "LOCATION": "eventkit_cache"},
     }
@@ -380,7 +380,10 @@ if os.path.isfile(ssl_verification_settings):
 else:
     SSL_VERIFICATION = is_true(ssl_verification_settings)
 
-LAND_DATA_URL = os.getenv("LAND_DATA_URL", "https://osmdata.openstreetmap.de/download/land-polygons-split-3857.zip",)
+LAND_DATA_URL = os.getenv(
+    "LAND_DATA_URL",
+    "https://osmdata.openstreetmap.de/download/land-polygons-split-3857.zip",
+)
 
 AUTO_LOGOUT_COOKIE_NAME = "eventkit_auto_logout"
 

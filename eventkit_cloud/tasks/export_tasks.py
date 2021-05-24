@@ -105,12 +105,12 @@ logger = get_task_logger(__name__)
 
 
 def make_file_downloadable(filepath, run_uid, provider_slug=None, skip_copy=False, download_filename=None):
-    """ Construct the filesystem location and url needed to download the file at filepath.
-        Copy filepath to the filesystem location required for download.
-        @provider_slug is specific to ExportTasks, not needed for FinalizeHookTasks
-        @skip_copy: It looks like sometimes (At least for OverpassQuery) we don't want the file copied,
-            generally can be ignored
-        @return A url to reach filepath.
+    """Construct the filesystem location and url needed to download the file at filepath.
+    Copy filepath to the filesystem location required for download.
+    @provider_slug is specific to ExportTasks, not needed for FinalizeHookTasks
+    @skip_copy: It looks like sometimes (At least for OverpassQuery) we don't want the file copied,
+        generally can be ignored
+    @return A url to reach filepath.
     """
 
     if provider_slug:
@@ -492,7 +492,10 @@ def osm_data_collection_pipeline(
     ret_gpkg_filepath = g.results[0].parts[0]
     assert ret_gpkg_filepath == gpkg_filepath
     update_progress(
-        export_task_record_uid, progress=100, eta=eta, msg="Completed OSM data collection pipeline",
+        export_task_record_uid,
+        progress=100,
+        eta=eta,
+        msg="Completed OSM data collection pipeline",
     )
     result = {"pbf": pbf_filepath, "gpkg": gpkg_filepath}
 

@@ -25,9 +25,13 @@ def get_relative_path_from_staging(staging_path):
 
 def get_download_paths(relative_path):
     downloads_filepath = os.path.join(
-        settings.EXPORT_DOWNLOAD_ROOT.rstrip(os.path.sep), relative_path.lstrip(os.path.sep),
+        settings.EXPORT_DOWNLOAD_ROOT.rstrip(os.path.sep),
+        relative_path.lstrip(os.path.sep),
     )
-    download_url = os.path.join(settings.EXPORT_MEDIA_ROOT.rstrip(os.path.sep), relative_path.lstrip(os.path.sep),)
+    download_url = os.path.join(
+        settings.EXPORT_MEDIA_ROOT.rstrip(os.path.sep),
+        relative_path.lstrip(os.path.sep),
+    )
     return downloads_filepath, download_url
 
 

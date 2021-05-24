@@ -37,7 +37,8 @@ def email_validation(strategy, backend, code):  # pragma: no cover
     verification from.
     """
     signature = signing.dumps(
-        {"session_key": strategy.session.session_key, "email": code.email}, key=settings.SECRET_KEY,
+        {"session_key": strategy.session.session_key, "email": code.email},
+        key=settings.SECRET_KEY,
     )
     verify_url = "{0}?verification_code={1}&signature={2}".format(
         reverse("osm:complete", args=(backend.name,)), code.code, signature
@@ -78,7 +79,8 @@ def partial_pipeline_data(backend, user=None, *args, **kwargs):  # pragma: no co
         backend.strategy.session_set("partial_pipeline", session_details["partial_pipeline"])
         backend.strategy.session_set(backend.name + "_state", session_details.get(backend.name + "_state"))
         backend.strategy.session_set(
-            backend.name + "unauthorized_token_name", session_details.get(backend.name + "unauthorized_token_name"),
+            backend.name + "unauthorized_token_name",
+            session_details.get(backend.name + "unauthorized_token_name"),
         )
 
     partial = backend.strategy.session_get("partial_pipeline", None)

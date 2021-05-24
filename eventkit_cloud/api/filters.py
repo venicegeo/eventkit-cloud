@@ -177,7 +177,11 @@ class GroupFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(field_name="name", lookup_expr="icontains")
     ordering = SharedOrderFilter(
         # tuple-mapping retains order
-        fields=(("admin_shared", "admin_shared"), ("shared", "shared"), ("name", "name"),),
+        fields=(
+            ("admin_shared", "admin_shared"),
+            ("shared", "shared"),
+            ("name", "name"),
+        ),
         label="ordering",
     )
 
