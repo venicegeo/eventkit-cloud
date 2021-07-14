@@ -929,7 +929,7 @@ def download_chunks(
         outfile = os.path.join(stage_dir, f"chunk{_index}.json")
 
         download_function = download_feature_data if feature_data else download_data
-        download_function(task_uid, url, outfile, cert_info=cert_info, task_points=task_points)
+        download_function(task_uid, url, outfile, cert_info=cert_info, task_points=(task_points * len(tile_bboxes)))
         chunks.append(outfile)
     return chunks
 
@@ -981,7 +981,8 @@ def download_data(
 
     written_size = 0
     update_interval = total_size / 100
-    cache.set(get_task_progress_cache_key(task_uid), 0, timeout=DEFAULT_CACHE_EXPIRATION)
+    start_points = cache.get_or_set(get_task_progress_cache_key(task_uid), 0, timeout=DEFAULT_CACHE_EXPIRATION)
+    start_percent = (start_points / task_points) * 100
 
     with logging_open(out_file, "wb") as file_:
         for chunk in response.iter_content(CHUNK):
@@ -998,7 +999,7 @@ def download_data(
 
                 progress_points = cache.get(get_task_progress_cache_key(task_uid))
                 progress = progress_points / task_points * 100 if progress_points < task_points else 100
-                update_progress(task_uid, progress)
+                update_progress(task_uid, progress, subtask_percentage=100 / task_points, subtask_start=start_percent)
 
                 cache.set(get_last_update_cache_key(task_uid), 0, timeout=DEFAULT_CACHE_EXPIRATION)
 

@@ -1480,11 +1480,11 @@ def arcgis_feature_service_export_task(
                 "distinct_field": layer.get("distinct_field"),
             }
 
-            try:
-                download_concurrently(layers.values(), configuration.get("concurrency"), feature_data=True)
-            except Exception as e:
-                logger.error(f"ArcGIS provider download error: {e}")
-                raise e
+        try:
+            download_concurrently(layers.values(), configuration.get("concurrency"), feature_data=True)
+        except Exception as e:
+            logger.error(f"ArcGIS provider download error: {e}")
+            raise e
 
         for layer_name, layer in layers.items():
             out = gdalutils.convert(

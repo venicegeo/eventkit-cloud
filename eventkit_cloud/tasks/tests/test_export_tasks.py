@@ -476,7 +476,7 @@ class TestExportTasks(ExportTaskBase):
             bbox=[1, 2, 3, 4],
         )
         mock_download_data.assert_called_with(
-            str(saved_export_task.uid), ANY, expected_input_path[3], cert_info=None, task_points=100
+            str(saved_export_task.uid), ANY, expected_input_path[3], cert_info=None, task_points=400
         )
 
     @patch("eventkit_cloud.utils.gdalutils.convert")
@@ -898,7 +898,7 @@ class TestExportTasks(ExportTaskBase):
         )
 
         mock_download_feature_data.assert_called_with(
-            str(saved_export_task.uid), expected_input_url, ANY, cert_info=None, task_points=100
+            str(saved_export_task.uid), expected_input_url, ANY, cert_info=None, task_points=400
         )
 
         mock_convert.assert_called_once_with(
@@ -1038,7 +1038,7 @@ class TestExportTasks(ExportTaskBase):
             bbox=bbox,
         )
         mock_download_feature_data.assert_called_with(
-            str(saved_export_task.uid), expected_input_url, "dir/chunk3.json", cert_info=None, task_points=100
+            str(saved_export_task.uid), expected_input_url, "dir/chunk3.json", cert_info=None, task_points=400
         )
 
     @patch("celery.app.task.Task.request")
